@@ -1,0 +1,15 @@
+C:\Users\mushr\source\repos\BusinessSim\BusinessSim\bin\Debug\BusinessSim.exe.config
+C:\Users\mushr\source\repos\BusinessSim\BusinessSim\bin\Debug\BusinessSim.exe
+C:\Users\mushr\source\repos\BusinessSim\BusinessSim\bin\Debug\BusinessSim.pdb
+C:\Users\mushr\source\repos\BusinessSim\BusinessSim\obj\Debug\BusinessSim.csproj.AssemblyReference.cache
+C:\Users\mushr\source\repos\BusinessSim\BusinessSim\obj\Debug\MainWindow.g.cs
+C:\Users\mushr\source\repos\BusinessSim\BusinessSim\obj\Debug\App.g.cs
+C:\Users\mushr\source\repos\BusinessSim\BusinessSim\obj\Debug\BusinessSim_MarkupCompile.cache
+C:\Users\mushr\source\repos\BusinessSim\BusinessSim\obj\Debug\BusinessSim_MarkupCompile.lref
+C:\Users\mushr\source\repos\BusinessSim\BusinessSim\obj\Debug\MainWindow.baml
+C:\Users\mushr\source\repos\BusinessSim\BusinessSim\obj\Debug\BusinessSim.g.resources
+C:\Users\mushr\source\repos\BusinessSim\BusinessSim\obj\Debug\BusinessSim.Properties.Resources.resources
+C:\Users\mushr\source\repos\BusinessSim\BusinessSim\obj\Debug\BusinessSim.csproj.GenerateResource.cache
+C:\Users\mushr\source\repos\BusinessSim\BusinessSim\obj\Debug\BusinessSim.csproj.CoreCompileInputs.cache
+C:\Users\mushr\source\repos\BusinessSim\BusinessSim\obj\Debug\BusinessSim.exe
+C:\Users\mushr\source\repos\BusinessSim\BusinessSim\obj\Debug\BusinessSim.pdb
