@@ -36,40 +36,6 @@ namespace BusinessSim
             InitializeComponent();
             
         }
-        private void FirmsChanged(object sender, TextChangedEventArgs e)
-        {
-            ownersAm = Convert.ToInt32(startOwners.Text);
-        }
-        private void WorkersChanged(object sender, TextChangedEventArgs e)
-        {
-            workersAm = Convert.ToInt32(startWorkers.Text);
-        }
-
-        private void ProductionChanged(object sender, TextChangedEventArgs e)
-        {
-            production = Convert.ToInt32(prodAm.Text);
-        }
-
-        private void CoinsChanged(object sender, TextChangedEventArgs e)
-        {
-            moneyAm = Convert.ToInt32(startCoins.Text);
-        }
-
-        private void OwnerEatChanged(object sender, TextChangedEventArgs e)
-        {
-            ownerNeedsFood = Convert.ToInt32(ownerNeeds.Text);
-        }
-
-        private void SalaryChanged(object sender, TextChangedEventArgs e)
-        {
-            salary = Convert.ToInt32(workersSalary.Text);
-        }
-
-        private void PercentChanged(object sender, TextChangedEventArgs e)
-        {
-            percent = Convert.ToInt32(perCent.Text);
-        }
-
         private void Regime0(object sender, RoutedEventArgs e)
         {
             bankReg = 2;
@@ -95,7 +61,14 @@ namespace BusinessSim
 
         public void MainFunc()
         {
-            
+            ownersAm = Convert.ToInt32(startOwners.Text);
+            workersAm = Convert.ToInt32(startWorkers.Text);
+            production = Convert.ToInt32(prodAm.Text);
+            moneyAm = Convert.ToInt32(startCoins.Text);
+            ownerNeedsFood = Convert.ToInt32(ownerNeeds.Text);
+            salary = Convert.ToInt32(workersSalary.Text);
+            percent = Convert.ToInt32(perCent.Text);
+
             Firm[] ownerAr = new Firm[ownersAm]; //Массив Фирм
             Firm bank = new Firm(); //Банк
             bool working = true; //Работает ли хоть одна фирма
@@ -105,6 +78,7 @@ namespace BusinessSim
             int ownersDonate = 0;
             int sumOwnersMoney = ownersAm * moneyAm;
             int sumOwnersDuty = 0;
+            int notWorking = 0;
 
             for(int i = 0; i < ownersAm; i++)
             {
@@ -252,7 +226,7 @@ namespace BusinessSim
                                 }
                                 if ((shift && x % 2 == 0) || (!shift && x % 2 != 0))
                                 {
-                                    ownerAr[x].workersAm = (ownerAr[x].totalMoneyWorkers >= ownerAr[x].workers) ? ownerAr[x].workers : ownerAr[x].workers - ownerAr[x].totalMoneyWorkers; //Расчёт активных рвбочих
+                                    ownerAr[x].workersAm = (ownerAr[x].totalMoneyWorkers >= ownerAr[x].workers) ? ownerAr[x].workers : (ownerAr[x].totalMoneyWorkers > 0) ? ownerAr[x].totalMoneyWorkers - ownerAr[x].workers : 0; //Расчёт активных рвбочих
 
                                     if (ownerAr[x].goodsAm >= ownerAr[x].workers) //Покупка продукции у хозяина
                                     {
@@ -270,6 +244,11 @@ namespace BusinessSim
                                     }
                                     ownerAr[x].totalMoneyWorkers -= (ownerAr[x].totalMoneyWorkers >= ownerAr[x].workersAm) ? ownerAr[x].workersAm : ownerAr[x].totalMoneyWorkers; //Расчёт денег на всех рабочих
 
+                                }
+                                if(ownerAr[x].workersAm <= 0 && ownerAr[x].works)
+                                {
+                                    notWorking++;
+                                    ownerAr[x].works = false;
                                 }
 
                                 //ownerAr[x].works = (ownerAr[x].workersAm == 0) ? false : true; //Есть ли рабочие на фирме
@@ -330,7 +309,11 @@ namespace BusinessSim
                                     }
                                 }
 
-                                if (ownerAr[x].duty > 0) ownerAr[x].works = false;
+                                if (ownerAr[x].duty > 0)
+                                {
+                                    ownerAr[x].works = false;
+                                    notWorking++;
+                                }
 
 
                                     ownersMoney.Text = Convert.ToString(sumOwnersMoney);
@@ -340,7 +323,16 @@ namespace BusinessSim
 
                             break;
 
+                            
+
                     }
+                    
+                    if (notWorking >= ownerAr.Length)
+                    {
+                        working = false;
+                        
+                    }
+
                     if (i >= 2) shift = !shift; //Смена порядка рабочих дней и выходных
                     
                 }

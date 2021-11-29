@@ -28,13 +28,13 @@
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
         
-        <TextBox x:Name="startOwners" Grid.Column="0" Grid.Row="1" IsReadOnly="False" TextAlignment="Center" TextChanged="FirmsChanged">5</TextBox>
-        <TextBox x:Name="startWorkers" Grid.Column="0" Grid.Row="2" IsReadOnly="False" TextAlignment="Center" TextChanged="WorkersChanged">18</TextBox>
-        <TextBox x:Name="startCoins" Grid.Column="0" Grid.Row="3" IsReadOnly="False" TextAlignment="Center" TextChanged="CoinsChanged">2</TextBox>
-        <TextBox x:Name="prodAm"  Grid.Column="0" Grid.Row="4" IsReadOnly="False" TextAlignment="Center" TextChanged="ProductionChanged">1</TextBox>
-        <TextBox x:Name="ownerNeeds" Grid.Column="0" Grid.Row="5" IsReadOnly="False" TextAlignment="Center" TextChanged="OwnerEatChanged">1</TextBox>
-        <TextBox x:Name="workersSalary" Grid.Column="0" Grid.Row="6" IsReadOnly="False" TextAlignment="Center" TextChanged="SalaryChanged">1</TextBox>
-        <TextBox x:Name="perCent" Grid.Column="0" Grid.Row="7" IsReadOnly="False" TextAlignment="Center" TextChanged="PercentChanged">0</TextBox>
+        <TextBox x:Name="startOwners" Grid.Column="0" Grid.Row="1" IsReadOnly="False" TextAlignment="Center">5</TextBox>
+        <TextBox x:Name="startWorkers" Grid.Column="0" Grid.Row="2" IsReadOnly="False" TextAlignment="Center">18</TextBox>
+        <TextBox x:Name="startCoins" Grid.Column="0" Grid.Row="3" IsReadOnly="False" TextAlignment="Center">2</TextBox>
+        <TextBox x:Name="prodAm"  Grid.Column="0" Grid.Row="4" IsReadOnly="False" TextAlignment="Center">1</TextBox>
+        <TextBox x:Name="ownerNeeds" Grid.Column="0" Grid.Row="5" IsReadOnly="False" TextAlignment="Center">1</TextBox>
+        <TextBox x:Name="workersSalary" Grid.Column="0" Grid.Row="6" IsReadOnly="False" TextAlignment="Center">1</TextBox>
+        <TextBox x:Name="perCent" Grid.Column="0" Grid.Row="7" IsReadOnly="False" TextAlignment="Center">0</TextBox>
         <Expander Header="Режим работы банка" Grid.Column="0" Grid.Row="8" Grid.ColumnSpan="3" Grid.RowSpan="2">
             <StackPanel>
                 <RadioButton GroupName="BankRegime" Content="Банк не работает" Checked="Regime0"/>
