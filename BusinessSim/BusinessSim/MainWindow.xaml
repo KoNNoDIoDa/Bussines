@@ -18,6 +18,7 @@
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition></ColumnDefinition>
@@ -35,7 +36,8 @@
         <TextBox x:Name="ownerNeeds" Grid.Column="0" Grid.Row="5" IsReadOnly="False" TextAlignment="Center">1</TextBox>
         <TextBox x:Name="workersSalary" Grid.Column="0" Grid.Row="6" IsReadOnly="False" TextAlignment="Center">1</TextBox>
         <TextBox x:Name="perCent" Grid.Column="0" Grid.Row="7" IsReadOnly="False" TextAlignment="Center">0</TextBox>
-        <Expander Header="Режим работы банка" Grid.Column="0" Grid.Row="8" Grid.ColumnSpan="3" Grid.RowSpan="2">
+        <CheckBox x:Name="ownerEatsAtWork" Grid.Column="0" Grid.Row="8" Grid.ColumnSpan="3" VerticalAlignment="Center" Content="Собственник ест в рабочий день"/>
+        <Expander Header="Режим работы банка" Grid.Column="0" Grid.Row="9" Grid.ColumnSpan="3" Grid.RowSpan="2">
             <StackPanel>
                 <RadioButton GroupName="BankRegime" Content="Банк не работает" Checked="Regime0"/>
                 <RadioButton GroupName="BankRegime" Content="Банк даёт в долг последний" Checked="Regime1" IsChecked="True"/>

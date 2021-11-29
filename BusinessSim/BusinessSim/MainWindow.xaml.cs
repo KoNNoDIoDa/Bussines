@@ -61,6 +61,7 @@ namespace BusinessSim
 
         public void MainFunc()
         {
+            ownersEat = Convert.ToBoolean(ownerEatsAtWork.IsChecked);
             ownersAm = Convert.ToInt32(startOwners.Text);
             workersAm = Convert.ToInt32(startWorkers.Text);
             production = Convert.ToInt32(prodAm.Text);
@@ -367,3 +368,4 @@ namespace BusinessSim
         //public int moneyAm = 0; //Количество денег (используется только если зарплата > 1)
     }
 }
+  
