@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using System.Threading;
+using System.Windows.Threading;
 
 namespace BusinessSim
 {
@@ -21,15 +21,21 @@ namespace BusinessSim
     /// </summary>
     public partial class MainWindow : Window
     {
-        public int ownersAm = 5; //Количество владельцев фирм
-        public int workersAm = 18; // Общее количество рабочих
-        public int moneyAm = 2; //Количество монет на владельца
-        public int bankReg; //Режим работы банка
-        public int salary = 1; //Зарплата рабочего
-        public int production = 2; //Количество продукта, производимого рабочим за день
-        public bool ownersEat; //Ест ли владелец в рабочий день
-        public int ownerNeedsFood = 1; //Количестов еды потребляемой хозяином
-        public double percent = 0; //Ставка по кредиту в банке
+        private static int ownersAm = 5; //Количество владельцев фирм
+        private int workersAm = 18; // Общее количество рабочих
+        private int moneyAm = 2; //Количество монет на владельца
+        private int bankReg; //Режим работы банка
+        private int salary = 1; //Зарплата рабочего
+        private int production = 2; //Количество продукта, производимого рабочим за день
+        private bool ownersEat; //Ест ли владелец в рабочий день
+        private int ownerNeedsFood = 1; //Количестов еды потребляемой хозяином
+        private double percent = 0; //Ставка по кредиту в банке
+        private DispatcherTimer timer = new DispatcherTimer();
+        Firm[] ownerAr = new Firm[ownersAm]; //Массив Фирм
+        Firm bank = new Firm(); //Банк
+        int order = 0;
+
+
 
         public MainWindow()
         {
@@ -58,20 +64,8 @@ namespace BusinessSim
         {
             MainFunc();
         }
-
-        public void MainFunc()
+        public void DispatcherTimer_Tick(object sender, EventArgs e)
         {
-            ownersEat = Convert.ToBoolean(ownerEatsAtWork.IsChecked);
-            ownersAm = Convert.ToInt32(startOwners.Text);
-            workersAm = Convert.ToInt32(startWorkers.Text);
-            production = Convert.ToInt32(prodAm.Text);
-            moneyAm = Convert.ToInt32(startCoins.Text);
-            ownerNeedsFood = Convert.ToInt32(ownerNeeds.Text);
-            salary = Convert.ToInt32(workersSalary.Text);
-            percent = Convert.ToInt32(perCent.Text);
-
-            Firm[] ownerAr = new Firm[ownersAm]; //Массив Фирм
-            Firm bank = new Firm(); //Банк
             bool working = true; //Работает ли хоть одна фирма
             bool shift = false; //Смена работы фирм (выходной / рабочий день)
             int needed = 0; //Количество фирм, которым нужно взять вдолг
@@ -81,46 +75,12 @@ namespace BusinessSim
             int sumOwnersDuty = 0;
             int notWorking = 0;
 
-            for(int i = 0; i < ownersAm; i++)
+            if (working)
             {
-                ownerAr[i] = new Firm();
-            }
-
-
-                ownersMoney.Text = Convert.ToString(sumOwnersMoney); 
-
-
-            if (bankReg < 2)
-            {
-                bank.moneyAm = moneyAm * ownerAr.Length; //Определяет количество денег в банке
-                moneyAm = 0;
-                    bankMoney.Text = Convert.ToString(bank.moneyAm);
-            }
-            else percent = 0;
-            int workersPerOwner = workersAm % ownerAr.Length; //Определяет остаток рабочих после распределения
-            for(int i = 0; i < ownerAr.Length; i++) //распределяет рабочих по фирмам
-            {
-                
-                for(int y = 0; y < workersAm / ownerAr.Length; y++)
-                {
-                    ownerAr[i].workers++;
-                }
-                ownerAr[i].moneyAm = moneyAm; //если банк не работает, то деньги находятся у фирм с самого начала
-                if (workersPerOwner > 0) //Распределяет остаток рабочих по фирмам
-                {
-                    ownerAr[i].workers++;
-                    workersPerOwner--;
-                }
-                ownerAr[i].workersAm = ownerAr[i].workers;
-            }
-            
-            for(int i = 0; working; i++) //Цикл, который отвечает за порядок действий в цикле
-            {
-                
                 for (int x = 0; x != ownerAr.Length; x++) //Цикл для перебора фирм на каждое действие
                 {
                     bank.gave = bank.moneyAm;
-                    switch (i)
+                    switch (order)
                     {
                         case 0:
                             if (ownerAr[x].works)
@@ -158,6 +118,7 @@ namespace BusinessSim
                                     needed++;
                                 }
                                 //Thread.Sleep(1000);
+                                order++;
                             }
 
                             break;
@@ -173,9 +134,9 @@ namespace BusinessSim
                                         int given = ((bank.moneyAm + ownersDonate) / needed <= ownerAr[x].workers * salary - ownerAr[x].moneyAm) ? ownerAr[x].workers * salary - ownerAr[x].moneyAm : (bank.moneyAm + ownersDonate) / needed; //Выданная сумма
                                         ownerAr[x].moneyAm += given;
                                         ownerAr[x].duty += given;
-                                        sumOwnersMoney += ownerAr[x].duty;
+                                        sumOwnersDuty += ownerAr[x].duty;
 
-                                            sumDuty.Text = Convert.ToString(sumOwnersDuty);
+                                        sumDuty.Text = Convert.ToString(sumOwnersDuty);
 
                                         if (given > ownersDonate)
                                         {
@@ -184,13 +145,13 @@ namespace BusinessSim
                                         }
                                         else ownersDonate -= given;
 
-                                            bankMoney.Text = Convert.ToString(bank.moneyAm);
+                                        bankMoney.Text = Convert.ToString(bank.moneyAm);
                                     }
                                     ownerAr[x].totalMoneyWorkers += (ownerAr[x].moneyAm > ownerAr[x].workers) ? (ownerAr[x].moneyAm > ownerAr[x].workers * salary) ? ownerAr[x].workers * salary : ownerAr[x].moneyAm : ownerAr[x].moneyAm; //Выдача зарплаты
                                     ownerAr[x].moneyAm -= (ownerAr[x].moneyAm > ownerAr[x].workers) ? (ownerAr[x].moneyAm > ownerAr[x].workers * salary) ? ownerAr[x].workers * salary : ownerAr[x].moneyAm : ownerAr[x].moneyAm;
                                     sumOwnersMoney -= (ownerAr[x].moneyAm > ownerAr[x].workers) ? (ownerAr[x].moneyAm > ownerAr[x].workers * salary) ? ownerAr[x].workers * salary : ownerAr[x].moneyAm : ownerAr[x].moneyAm;
 
-                                        ownersMoney.Text = Convert.ToString(sumOwnersMoney);
+                                    ownersMoney.Text = Convert.ToString(sumOwnersMoney);
 
                                     if (ownersEat) //Владелец употребляет продукт
                                     {
@@ -203,7 +164,8 @@ namespace BusinessSim
                                 }
 
                                 neededWorkers += (ownerAr[x].goodsAm <= ownerAr[x].workers) ? ownerAr[x].workers - ownerAr[x].goodsAm : 0; //Количество работников, которым придётся брать продукт у других фирм
-                                //Thread.Sleep(1000);
+                                order++;
+
                             }
                             break;
 
@@ -222,7 +184,7 @@ namespace BusinessSim
                                     }
                                     else if (ownerAr[x].moneyAm <= ownerNeedsFood) ownerAr[x].hungry += 1; //Повышения индекса голода в случае недостатка денег
 
-                                        ownersMoney.Text = Convert.ToString(sumOwnersMoney);
+                                    ownersMoney.Text = Convert.ToString(sumOwnersMoney);
 
                                 }
                                 if ((shift && x % 2 == 0) || (!shift && x % 2 != 0))
@@ -246,7 +208,7 @@ namespace BusinessSim
                                     ownerAr[x].totalMoneyWorkers -= (ownerAr[x].totalMoneyWorkers >= ownerAr[x].workersAm) ? ownerAr[x].workersAm : ownerAr[x].totalMoneyWorkers; //Расчёт денег на всех рабочих
 
                                 }
-                                if(ownerAr[x].workersAm <= 0 && ownerAr[x].works)
+                                if (ownerAr[x].workersAm <= 0 && ownerAr[x].works)
                                 {
                                     notWorking++;
                                     ownerAr[x].works = false;
@@ -297,12 +259,12 @@ namespace BusinessSim
 
                                     }
                                 }
-                                else if (ownerAr[x].moneyAm > 0 && (ownerAr[x].gave > 0 || ownerAr[x].duty > 0 ))
+                                else if (ownerAr[x].moneyAm > 0 && (ownerAr[x].gave > 0 || ownerAr[x].duty > 0))
                                 {
                                     ownerAr[x].moneyAm += ownerAr[x].gave;
                                     ownerAr[x].gave = 0;
 
-                                    if(ownerAr[x].duty > 0 && ownerAr[x].duty <= ownerAr[x].moneyAm)
+                                    if (ownerAr[x].duty > 0 && ownerAr[x].duty <= ownerAr[x].moneyAm)
                                     {
                                         ownerAr[x].moneyAm -= ownerAr[x].duty;
                                         ownerAr[x].duty = 0;
@@ -317,28 +279,90 @@ namespace BusinessSim
                                 }
 
 
-                                    ownersMoney.Text = Convert.ToString(sumOwnersMoney);
-                                    sumDuty.Text = Convert.ToString(sumOwnersDuty);
+                                ownersMoney.Text = Convert.ToString(sumOwnersMoney);
+                                sumDuty.Text = Convert.ToString(sumOwnersDuty);
+                                order = 0;
                                 //Thread.Sleep(1000);
                             }
 
                             break;
 
-                            
+
 
                     }
-                    
+
                     if (notWorking >= ownerAr.Length)
                     {
                         working = false;
-                        
+
                     }
 
-                    if (i >= 2) shift = !shift; //Смена порядка рабочих дней и выходных
-                    
+                    if (order >= 2) shift = !shift; //Смена порядка рабочих дней и выходных
+
                 }
-                i = (i >= 2) ? 0 : i; //Откат порядка
             }
+            else
+            {
+                //timer.Stop();
+            }
+        }
+        public void MainFunc()
+        {
+            timer.Tick += DispatcherTimer_Tick;
+            timer.Interval = new TimeSpan(0, 0, 0,01);
+            timer.Start();
+
+            ownersEat = Convert.ToBoolean(ownerEatsAtWork.IsChecked);
+            ownersAm = Convert.ToInt32(startOwners.Text);
+            workersAm = Convert.ToInt32(startWorkers.Text);
+            production = Convert.ToInt32(prodAm.Text);
+            moneyAm = Convert.ToInt32(startCoins.Text);
+            ownerNeedsFood = Convert.ToInt32(ownerNeeds.Text);
+            salary = Convert.ToInt32(workersSalary.Text);
+            percent = Convert.ToInt32(perCent.Text);
+
+            
+            
+
+            for(int i = 0; i < ownersAm; i++)
+            {
+                ownerAr[i] = new Firm();
+            }
+
+
+                ownersMoney.Text = Convert.ToString(ownersAm * moneyAm); 
+
+
+            if (bankReg < 2)
+            {
+                bank.moneyAm = moneyAm * ownerAr.Length; //Определяет количество денег в банке
+                moneyAm = 0;
+                    bankMoney.Text = Convert.ToString(bank.moneyAm);
+            }
+            else percent = 0;
+            int workersPerOwner = workersAm % ownerAr.Length; //Определяет остаток рабочих после распределения
+            for(int i = 0; i < ownerAr.Length; i++) //распределяет рабочих по фирмам
+            {
+                
+                for(int y = 0; y < workersAm / ownerAr.Length; y++)
+                {
+                    ownerAr[i].workers++;
+                }
+                ownerAr[i].moneyAm = moneyAm; //если банк не работает, то деньги находятся у фирм с самого начала
+                if (workersPerOwner > 0) //Распределяет остаток рабочих по фирмам
+                {
+                    ownerAr[i].workers++;
+                    workersPerOwner--;
+                }
+                ownerAr[i].workersAm = ownerAr[i].workers;
+            }
+            
+            //for(int i = 0; working; i++) //Цикл, который отвечает за порядок действий в цикле
+            //{
+                
+                
+            //    i = (i >= 2) ? 0 : i; //Откат порядка
+            //}
             
             
 
