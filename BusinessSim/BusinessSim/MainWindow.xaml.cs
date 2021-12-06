@@ -57,18 +57,21 @@ namespace BusinessSim
         {
             bankReg = 2;
             bankMoney.IsEnabled = false;
+            sumDuty.IsEnabled = false;
         }
 
         private void Regime1(object sender, RoutedEventArgs e)
         {
             bankReg = 0;
             if (bankMoney != null) bankMoney.IsEnabled = true;
+            if (sumDuty != null) sumDuty.IsEnabled = true;
         }
 
         private void Regime2(object sender, RoutedEventArgs e)
         {
             bankReg = 1;
             bankMoney.IsEnabled = true;
+            sumDuty.IsEnabled = true;
         }
 
         private void StartButton_Click(object sender, RoutedEventArgs e)
@@ -151,7 +154,7 @@ namespace BusinessSim
                                         ownerAr[x].duty += given;
                                         sumOwnersDuty += ownerAr[x].duty;
 
-                                        sumDuty.Text = Convert.ToString(sumOwnersDuty);
+                                        sumDuty.Text = (bankReg != 2) ? Convert.ToString(sumOwnersDuty) : "";
 
                                         if (given > ownersDonate)
                                         {
@@ -160,7 +163,7 @@ namespace BusinessSim
                                         }
                                         else ownersDonate -= given;
 
-                                        bankMoney.Text = Convert.ToString(bank.moneyAm);
+                                        bankMoney.Text = (bankReg != 2) ? Convert.ToString(bank.moneyAm) : "";
                                     }
                                     ownerAr[x].totalMoneyWorkers += (ownerAr[x].moneyAm > ownerAr[x].workers) ? (ownerAr[x].moneyAm > ownerAr[x].workers * salary) ? ownerAr[x].workers * salary : ownerAr[x].moneyAm : ownerAr[x].moneyAm; //Выдача зарплаты
                                     ownerAr[x].moneyAm -= (ownerAr[x].moneyAm > ownerAr[x].workers) ? (ownerAr[x].moneyAm > ownerAr[x].workers * salary) ? ownerAr[x].workers * salary : ownerAr[x].moneyAm : ownerAr[x].moneyAm;
@@ -272,7 +275,7 @@ namespace BusinessSim
                                     }
 
                                     bank.moneyAm += (ownerAr[x].moneyAm > ownerAr[x].duty) ? ownerAr[x].duty : ownerAr[x].moneyAm;
-                                    bankMoney.Text = Convert.ToString(bank.moneyAm);
+                                    bankMoney.Text = (bankReg != 2) ? Convert.ToString(bank.moneyAm) : "";
 
                                 }
 
@@ -314,7 +317,7 @@ namespace BusinessSim
 
 
                                 ownersMoney.Text = Convert.ToString(sumOwnersMoney);
-                                sumDuty.Text = Convert.ToString(sumOwnersDuty);
+                                sumDuty.Text = (bankReg != 2) ? Convert.ToString(sumOwnersDuty) : "";
                                 //Thread.Sleep(1000);
                                 sumProd.Text = Convert.ToString(sumProduction);
                             }
@@ -345,7 +348,6 @@ namespace BusinessSim
         {
             timer.Tick += DispatcherTimer_Tick;
             timer.Interval = new TimeSpan(0, 0, 0, 0, 500);
-            timer.Start();
 
             ownersEat = Convert.ToBoolean(ownerEatsAtWork.IsChecked);
             ownersAm = Convert.ToInt32(startOwners.Text);
@@ -355,11 +357,23 @@ namespace BusinessSim
             ownerNeedsFood = Convert.ToInt32(ownerNeeds.Text);
             salary = Convert.ToInt32(workersSalary.Text);
             percent = Convert.ToInt32(perCent.Text);
+            ownerAr = new Firm[ownersAm];
 
-            
-            
+            bank = new Firm();
+            order = 0;
+            working = true;
+            shift = false;
+            needed = 0;
+            neededWorkers = 0;
+            ownersDonate = 0;
+            sumOwnersMoney = ownersAm * moneyAm;
+            sumOwnersDuty = 0;
+            notWorking = 0;
+            activeWorkers = 0;
+            activeFirms = 0;
+            sumProduction = 0;
 
-            for(int i = 0; i < ownersAm; i++)
+            for (int i = 0; i < ownersAm; i++)
             {
                 ownerAr[i] = new Firm();
             }
@@ -367,13 +381,13 @@ namespace BusinessSim
 
                 ownersMoney.Text = Convert.ToString(ownersAm * moneyAm);
 
-            sumDuty.Text = "0";
+            sumDuty.Text = (bankReg != 2) ? "0" : "";
 
             if (bankReg < 2)
             {
                 bank.moneyAm = moneyAm * ownerAr.Length; //Определяет количество денег в банке
                 moneyAm = 0;
-                    bankMoney.Text = Convert.ToString(bank.moneyAm);
+                    bankMoney.Text = (bankReg != 2) ? Convert.ToString(bank.moneyAm) : "";
             }
             else percent = 0;
             int workersPerOwner = workersAm % ownerAr.Length; //Определяет остаток рабочих после распределения
@@ -398,13 +412,8 @@ namespace BusinessSim
             actFirms.Text = Convert.ToString(activeFirms);
             sumProd.Text = Convert.ToString(sumProduction);
 
-            //for(int i = 0; working; i++) //Цикл, который отвечает за порядок действий в цикле
-            //{
-
-
-            //    i = (i >= 2) ? 0 : i; //Откат порядка
-            //}
             bank.gave = bank.moneyAm;
+            timer.Start();
 
 
         }
@@ -426,11 +435,6 @@ namespace BusinessSim
         public bool needMoney; //Недостаток денег
         public int gaveGoods; //Количество проданной продукции
         public bool works = true; //Статус работы фирмы
-    }
-    public class Worker //Набор параметров каждого рабочего
-    {
-        //public bool hungry = false; //Голод
-        //public int moneyAm = 0; //Количество денег (используется только если зарплата > 1)
     }
 }
   

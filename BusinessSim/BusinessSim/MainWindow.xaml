@@ -28,7 +28,7 @@
             <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        
+
         <TextBox x:Name="startOwners" Grid.Column="0" Grid.Row="1" IsReadOnly="False" TextAlignment="Center">5</TextBox>
         <TextBox x:Name="startWorkers" Grid.Column="0" Grid.Row="2" IsReadOnly="False" TextAlignment="Center">18</TextBox>
         <TextBox x:Name="startCoins" Grid.Column="0" Grid.Row="3" IsReadOnly="False" TextAlignment="Center">2</TextBox>
@@ -44,7 +44,7 @@
                 <RadioButton GroupName="BankRegime" Content="Только банк даёт в долг" Checked="Regime2"/>
             </StackPanel>
         </Expander>
-        
+
         <TextBlock Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="2" TextWrapping="Wrap" TextAlignment="Center" FontSize="20" FontWeight="Bold">Входные данные</TextBlock>
         <TextBlock Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" TextAlignment="Left" VerticalAlignment="Center">Количество фирм</TextBlock>
         <TextBlock Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="2" TextAlignment="Left" VerticalAlignment="Center">Количество рабочих</TextBlock>
@@ -69,6 +69,6 @@
         <TextBlock Grid.Column="4" Grid.Row="5" Grid.ColumnSpan="2" TextAlignment="Left" VerticalAlignment="Center">Количество активных фирм</TextBlock>
         <TextBlock Grid.Column="4" Grid.Row="6" Grid.ColumnSpan="2" TextAlignment="Left" VerticalAlignment="Center">Суммарное количество продукции</TextBlock>
 
-        <Button x:Name="startButton" Grid.Column="6" Grid.Row="9" Content="Старт" Click="StartButton_Click"/>
+        <Button x:Name="startButton" Grid.Column="5" Grid.Row="10" Content="Старт" Click="StartButton_Click"/>
     </Grid>
 </Window>
