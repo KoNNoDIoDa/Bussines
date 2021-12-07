@@ -47,7 +47,6 @@ namespace BusinessSim
         int sumProduction = 0;
 
 
-
         public MainWindow()
         {
             InitializeComponent();
@@ -58,6 +57,8 @@ namespace BusinessSim
             bankReg = 2;
             bankMoney.IsEnabled = false;
             sumDuty.IsEnabled = false;
+            sumDuty.Text = "";
+            bankMoney.Text = "";
         }
 
         private void Regime1(object sender, RoutedEventArgs e)
@@ -341,6 +342,7 @@ namespace BusinessSim
             }
             else
             {
+                TurnTheLight(true);
                 timer.Stop();
             }
         }
@@ -412,10 +414,55 @@ namespace BusinessSim
             actFirms.Text = Convert.ToString(activeFirms);
             sumProd.Text = Convert.ToString(sumProduction);
 
+            TurnTheLight(false);
             bank.gave = bank.moneyAm;
             timer.Start();
 
 
+        }
+
+        public void TurnTheLight(bool turnOn)
+        {
+            //startOwners.Background = (!turnOn) ? new SolidColorBrush(Colors.LightGray) : new SolidColorBrush(Colors.White);
+            //startWorkers.Background = (!turnOn) ? new SolidColorBrush(Colors.LightGray) : new SolidColorBrush(Colors.White);
+            //startCoins.Background = (!turnOn) ? new SolidColorBrush(Colors.LightGray) : new SolidColorBrush(Colors.White);
+            //prodAm.Background = (!turnOn) ? new SolidColorBrush(Colors.LightGray) : new SolidColorBrush(Colors.White);
+            //ownerNeeds.Background = (!turnOn) ? new SolidColorBrush(Colors.LightGray) : new SolidColorBrush(Colors.White);
+            //workersSalary.Background = (!turnOn) ? new SolidColorBrush(Colors.LightGray) : new SolidColorBrush(Colors.White);
+            //perCent.Background = (!turnOn) ? new SolidColorBrush(Colors.LightGray) : new SolidColorBrush(Colors.White);
+            //ownerEatsAtWork.Background = (!turnOn) ? new SolidColorBrush(Colors.LightGray) : new SolidColorBrush(Colors.White);
+            //selector.Background = (!turnOn) ? new SolidColorBrush(Colors.LightGray) : new SolidColorBrush(Colors.White);
+
+            firstColumn.Background = (!turnOn) ? new SolidColorBrush(Colors.LightGray) : new SolidColorBrush(Colors.White);
+
+            //startOwners.IsEnabled = (!turnOn) ? true : false;
+            //startWorkers.IsEnabled = (!turnOn) ? true : false;
+            //startCoins.IsEnabled = (!turnOn) ? true : false;
+            //prodAm.IsEnabled = (!turnOn) ? true : false;
+            //ownerNeeds.IsEnabled = (!turnOn) ? true : false;
+            //workersSalary.IsEnabled = (!turnOn) ? true : false;
+            //perCent.IsEnabled = (!turnOn) ? true : false;
+            //selector.IsEnabled = (!turnOn) ? true : false;
+
+            firstColumn.IsEnabled = (turnOn) ? true : false;
+
+            //bankMoney.Background = (turnOn) ? new SolidColorBrush(Colors.LightGray) : new SolidColorBrush(Colors.White);
+            //ownersMoney.Background = (turnOn) ? new SolidColorBrush(Colors.LightGray) : new SolidColorBrush(Colors.White);
+            //sumDuty.Background = (turnOn) ? new SolidColorBrush(Colors.LightGray) : new SolidColorBrush(Colors.White);
+            //actWorkers.Background = (turnOn) ? new SolidColorBrush(Colors.LightGray) : new SolidColorBrush(Colors.White);
+            //actFirms.Background = (turnOn) ? new SolidColorBrush(Colors.LightGray) : new SolidColorBrush(Colors.White);
+            //sumProd.Background = (turnOn) ? new SolidColorBrush(Colors.LightGray) : new SolidColorBrush(Colors.White);
+
+            secondColumn.Background = (turnOn) ? new SolidColorBrush(Colors.LightGray) : new SolidColorBrush(Colors.White);
+
+            //bankMoney.IsEnabled = (turnOn) ? true : false;
+            //ownersMoney.IsEnabled = (turnOn) ? true : false;
+            //sumDuty.IsEnabled = (turnOn) ? true : false;
+            //actWorkers.IsEnabled = (turnOn) ? true : false;
+            //actFirms.IsEnabled = (turnOn) ? true : false;
+            //sumProd.IsEnabled = (turnOn) ? true : false;
+
+            secondColumn.IsEnabled = (!turnOn) ? true : false;
         }
 
         

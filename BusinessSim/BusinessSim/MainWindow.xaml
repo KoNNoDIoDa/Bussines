@@ -29,45 +29,85 @@
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
-        <TextBox x:Name="startOwners" Grid.Column="0" Grid.Row="1" IsReadOnly="False" TextAlignment="Center">5</TextBox>
-        <TextBox x:Name="startWorkers" Grid.Column="0" Grid.Row="2" IsReadOnly="False" TextAlignment="Center">18</TextBox>
-        <TextBox x:Name="startCoins" Grid.Column="0" Grid.Row="3" IsReadOnly="False" TextAlignment="Center">2</TextBox>
-        <TextBox x:Name="prodAm"  Grid.Column="0" Grid.Row="4" IsReadOnly="False" TextAlignment="Center">1</TextBox>
-        <TextBox x:Name="ownerNeeds" Grid.Column="0" Grid.Row="5" IsReadOnly="False" TextAlignment="Center">1</TextBox>
-        <TextBox x:Name="workersSalary" Grid.Column="0" Grid.Row="6" IsReadOnly="False" TextAlignment="Center">1</TextBox>
-        <TextBox x:Name="perCent" Grid.Column="0" Grid.Row="7" IsReadOnly="False" TextAlignment="Center">0</TextBox>
-        <CheckBox x:Name="ownerEatsAtWork" Grid.Column="0" Grid.Row="8" Grid.ColumnSpan="3" VerticalAlignment="Center" Content="Собственник ест в рабочий день"/>
-        <Expander Header="Режим работы банка" Grid.Column="0" Grid.Row="9" Grid.ColumnSpan="3" Grid.RowSpan="2">
-            <StackPanel>
-                <RadioButton GroupName="BankRegime" Content="Банк не работает" Checked="Regime0"/>
-                <RadioButton GroupName="BankRegime" Content="Банк даёт в долг последний" Checked="Regime1" IsChecked="True"/>
-                <RadioButton GroupName="BankRegime" Content="Только банк даёт в долг" Checked="Regime2"/>
-            </StackPanel>
-        </Expander>
-
         <TextBlock Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="2" TextWrapping="Wrap" TextAlignment="Center" FontSize="20" FontWeight="Bold">Входные данные</TextBlock>
-        <TextBlock Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" TextAlignment="Left" VerticalAlignment="Center">Количество фирм</TextBlock>
-        <TextBlock Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="2" TextAlignment="Left" VerticalAlignment="Center">Количество рабочих</TextBlock>
-        <TextBlock Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="2" TextAlignment="Left" VerticalAlignment="Center">Количество монет на фирму</TextBlock>
-        <TextBlock Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="2" TextAlignment="Left" VerticalAlignment="Center">Количество продукта производимого рабочим за день</TextBlock>
-        <TextBlock Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="2" TextAlignment="Left" VerticalAlignment="Center">Количество продукта потребляемого хозяином</TextBlock>
-        <TextBlock Grid.Column="1" Grid.Row="6" Grid.ColumnSpan="2" TextAlignment="Left" VerticalAlignment="Center">Зарплата рабочего</TextBlock>
-        <TextBlock Grid.Column="1" Grid.Row="7" Grid.ColumnSpan="2" TextAlignment="Left" VerticalAlignment="Center">Ставка по кредиту</TextBlock>
+        <Grid x:Name="firstColumn" Grid.Column="0" Grid.Row="1" Grid.RowSpan="10" Grid.ColumnSpan="3">
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
 
-        <TextBox x:Name="bankMoney" Grid.Column="3" Grid.Row="1" IsReadOnly="True" TextAlignment="Center"></TextBox>
-        <TextBox x:Name="ownersMoney" Grid.Column="3" Grid.Row="2" IsReadOnly="True" TextAlignment="Center"></TextBox>
-        <TextBox x:Name="sumDuty" Grid.Column="3" Grid.Row="3" IsReadOnly="True" TextAlignment="Center"></TextBox>
-        <TextBox x:Name="actWorkers" Grid.Column="3" Grid.Row="4" IsReadOnly="True" TextAlignment="Center"></TextBox>
-        <TextBox x:Name="actFirms" Grid.Column="3" Grid.Row="5" IsReadOnly="True" TextAlignment="Center"></TextBox>
-        <TextBox x:Name="sumProd" Grid.Column="3" Grid.Row="6" IsReadOnly="True" TextAlignment="Center"></TextBox>
+            <TextBox x:Name="startOwners" Grid.Column="0" Grid.Row="0" IsReadOnly="False" TextAlignment="Center">5</TextBox>
+            <TextBox x:Name="startWorkers" Grid.Column="0" Grid.Row="1" IsReadOnly="False" TextAlignment="Center">18</TextBox>
+            <TextBox x:Name="startCoins" Grid.Column="0" Grid.Row="2" IsReadOnly="False" TextAlignment="Center">2</TextBox>
+            <TextBox x:Name="prodAm"  Grid.Column="0" Grid.Row="3" IsReadOnly="False" TextAlignment="Center">1</TextBox>
+            <TextBox x:Name="ownerNeeds" Grid.Column="0" Grid.Row="4" IsReadOnly="False" TextAlignment="Center">1</TextBox>
+            <TextBox x:Name="workersSalary" Grid.Column="0" Grid.Row="5" IsReadOnly="False" TextAlignment="Center">1</TextBox>
+            <TextBox x:Name="perCent" Grid.Column="0" Grid.Row="6" IsReadOnly="False" TextAlignment="Center">0</TextBox>
+            <CheckBox x:Name="ownerEatsAtWork" Grid.Column="0" Grid.Row="7" Grid.ColumnSpan="3" VerticalAlignment="Center" Content="Собственник ест в рабочий день"/>
+            <Expander x:Name="selector" Header="Режим работы банка" Grid.Column="0" Grid.Row="8" Grid.ColumnSpan="3" Grid.RowSpan="2">
+                <StackPanel>
+                    <RadioButton GroupName="BankRegime" Content="Банк не работает" Checked="Regime0"/>
+                    <RadioButton GroupName="BankRegime" Content="Банк даёт в долг последний" Checked="Regime1" IsChecked="True"/>
+                    <RadioButton GroupName="BankRegime" Content="Только банк даёт в долг" Checked="Regime2"/>
+                </StackPanel>
+            </Expander>
+
+            <TextBlock Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="2" TextAlignment="Left" VerticalAlignment="Center">Количество фирм</TextBlock>
+            <TextBlock Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" TextAlignment="Left" VerticalAlignment="Center">Количество рабочих</TextBlock>
+            <TextBlock Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="2" TextAlignment="Left" VerticalAlignment="Center">Количество монет на фирму</TextBlock>
+            <TextBlock Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="2" TextAlignment="Left" VerticalAlignment="Center">Количество продукта производимого рабочим за день</TextBlock>
+            <TextBlock Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="2" TextAlignment="Left" VerticalAlignment="Center">Количество продукта потребляемого хозяином</TextBlock>
+            <TextBlock Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="2" TextAlignment="Left" VerticalAlignment="Center">Зарплата рабочего</TextBlock>
+            <TextBlock Grid.Column="1" Grid.Row="6" Grid.ColumnSpan="2" TextAlignment="Left" VerticalAlignment="Center">Ставка по кредиту</TextBlock>
+        </Grid>
 
         <TextBlock Grid.Column="4" Grid.Row="0" Grid.ColumnSpan="2" TextWrapping="Wrap" TextAlignment="Center" FontSize="20" FontWeight="Bold">Текущее состояние</TextBlock>
-        <TextBlock Grid.Column="4" Grid.Row="1" Grid.ColumnSpan="2" TextAlignment="Left" VerticalAlignment="Center">Количество монет у банка</TextBlock>
-        <TextBlock Grid.Column="4" Grid.Row="2" Grid.ColumnSpan="2" TextAlignment="Left" VerticalAlignment="Center">Суммарное количество монет у хозяев</TextBlock>
-        <TextBlock Grid.Column="4" Grid.Row="3" Grid.ColumnSpan="2" TextAlignment="Left" VerticalAlignment="Center">Суммарная задолжность перед банком</TextBlock>
-        <TextBlock Grid.Column="4" Grid.Row="4" Grid.ColumnSpan="2" TextAlignment="Left" VerticalAlignment="Center">Суммарное количество активных рабочих</TextBlock>
-        <TextBlock Grid.Column="4" Grid.Row="5" Grid.ColumnSpan="2" TextAlignment="Left" VerticalAlignment="Center">Количество активных фирм</TextBlock>
-        <TextBlock Grid.Column="4" Grid.Row="6" Grid.ColumnSpan="2" TextAlignment="Left" VerticalAlignment="Center">Суммарное количество продукции</TextBlock>
+        
+        <Grid x:Name="secondColumn" Grid.Column="3" Grid.Row="1" Grid.RowSpan="9" Grid.ColumnSpan="3" Background="LightGray" IsEnabled="False">
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            
+            <TextBox x:Name="bankMoney" Grid.Column="0" Grid.Row="0" IsReadOnly="True" TextAlignment="Center"></TextBox>
+            <TextBox x:Name="ownersMoney" Grid.Column="0" Grid.Row="1" IsReadOnly="True" TextAlignment="Center"></TextBox>
+            <TextBox x:Name="sumDuty" Grid.Column="0" Grid.Row="2" IsReadOnly="True" TextAlignment="Center"></TextBox>
+            <TextBox x:Name="actWorkers" Grid.Column="0" Grid.Row="3" IsReadOnly="True" TextAlignment="Center"></TextBox>
+            <TextBox x:Name="actFirms" Grid.Column="0" Grid.Row="4" IsReadOnly="True" TextAlignment="Center"></TextBox>
+            <TextBox x:Name="sumProd" Grid.Column="0" Grid.Row="5" IsReadOnly="True" TextAlignment="Center"></TextBox>
+
+            <TextBlock Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="2" TextAlignment="Left" VerticalAlignment="Center">Количество монет у банка</TextBlock>
+            <TextBlock Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" TextAlignment="Left" VerticalAlignment="Center">Суммарное количество монет у хозяев</TextBlock>
+            <TextBlock Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="2" TextAlignment="Left" VerticalAlignment="Center">Суммарная задолжность перед банком</TextBlock>
+            <TextBlock Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="2" TextAlignment="Left" VerticalAlignment="Center">Суммарное количество активных рабочих</TextBlock>
+            <TextBlock Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="2" TextAlignment="Left" VerticalAlignment="Center">Количество активных фирм</TextBlock>
+            <TextBlock Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="2" TextAlignment="Left" VerticalAlignment="Center">Суммарное количество продукции</TextBlock>
+        </Grid>
 
         <Button x:Name="startButton" Grid.Column="5" Grid.Row="10" Content="Старт" Click="StartButton_Click"/>
     </Grid>
