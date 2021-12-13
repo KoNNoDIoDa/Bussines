@@ -149,8 +149,8 @@ namespace BusinessSim
                                     if (ownerAr[x].needMoney) //Выдача денег в долг
                                     {
                                         
-                                        int given = ((bank.moneyAm + ownersDonate) / needed <= ownerAr[x].workers * salary - ownerAr[x].moneyAm) ? ownerAr[x].workers * salary - ownerAr[x].moneyAm : (bank.moneyAm + ownersDonate) / needed; //Выданная сумма
-                                        given = (given < bank.moneyAm) ? given : bank.moneyAm;
+                                        int given = ((ownerAr[x].workers * salary + ownerNeedsFood) - ownerAr[x].moneyAm > 0) ? (ownerAr[x].workers * salary - ownerAr[x].moneyAm) + ownerNeedsFood : 0; //Выданная сумма
+                                        bank.moneyAm -= given;
                                         ownerAr[x].moneyAm += given;
                                         ownerAr[x].duty += given;
                                         sumOwnersDuty += ownerAr[x].duty;
@@ -160,7 +160,6 @@ namespace BusinessSim
                                         if (given > ownersDonate)
                                         {
                                             ownersDonate = 0;
-                                            bank.moneyAm -= given - ownersDonate;
                                         }
                                         else ownersDonate -= given;
 
@@ -210,7 +209,7 @@ namespace BusinessSim
                                 if ((shift && x % 2 == 0) || (!shift && x % 2 != 0))
                                 {
                                     activeWorkers -= ownerAr[x].workersAm;
-                                    ownerAr[x].workersAm = (ownerAr[x].totalMoneyWorkers >= ownerAr[x].workers) ? ownerAr[x].workers : (ownerAr[x].totalMoneyWorkers > 0) ? (ownerAr[x].workers <= ownerAr[x].totalMoneyWorkers) ? ownerAr[x].totalMoneyWorkers - ownerAr[x].workers : 0 : 0; //Расчёт активных рвбочих
+                                    ownerAr[x].workersAm = (ownerAr[x].totalMoneyWorkers >= ownerAr[x].workers) ? ownerAr[x].workers : (ownerAr[x].totalMoneyWorkers > 0) ? (ownerAr[x].workers <= ownerAr[x].totalMoneyWorkers) ? ownerAr[x].totalMoneyWorkers - ownerAr[x].workers : ownerAr[x].totalMoneyWorkers : 0; //Расчёт активных рвбочих
                                     activeWorkers += ownerAr[x].workersAm;
 
                                     actWorkers.Text = Convert.ToString(activeWorkers);
@@ -265,9 +264,9 @@ namespace BusinessSim
                                     ownerAr[x].gaveGoods = 0;
                                 }
 
-                                if (bank.gave > (bank.moneyAm + ownersDonate) || bankReg == 1)
+                                if (sumOwnersDuty > ownersDonate || bankReg == 1)
                                 {
-                                    ownerAr[x].dutyPercent += (bank.gave - (bank.moneyAm + ownersDonate) > ownerAr[x].duty || bankReg == 1) ? ownerAr[x].duty / 100 * percent : bank.gave / 100 * percent;
+                                    ownerAr[x].dutyPercent += (sumOwnersDuty - ownersDonate > ownerAr[x].duty) ? ownerAr[x].duty / 100 * percent : sumOwnersDuty / 100 * percent;
                                     while (ownerAr[x].dutyPercent >= 1)
                                     {
                                         ownerAr[x].dutyPercent--;
@@ -387,7 +386,6 @@ namespace BusinessSim
 
             if (bankReg < 2)
             {
-                bank.moneyAm = moneyAm * ownerAr.Length; //Определяет количество денег в банке
                 moneyAm = 0;
                     bankMoney.Text = (bankReg != 2) ? Convert.ToString(bank.moneyAm) : "";
             }
@@ -415,7 +413,7 @@ namespace BusinessSim
             sumProd.Text = Convert.ToString(sumProduction);
 
             TurnTheLight(false);
-            bank.gave = bank.moneyAm;
+            
             timer.Start();
 
 
@@ -423,45 +421,10 @@ namespace BusinessSim
 
         public void TurnTheLight(bool turnOn)
         {
-            //startOwners.Background = (!turnOn) ? new SolidColorBrush(Colors.LightGray) : new SolidColorBrush(Colors.White);
-            //startWorkers.Background = (!turnOn) ? new SolidColorBrush(Colors.LightGray) : new SolidColorBrush(Colors.White);
-            //startCoins.Background = (!turnOn) ? new SolidColorBrush(Colors.LightGray) : new SolidColorBrush(Colors.White);
-            //prodAm.Background = (!turnOn) ? new SolidColorBrush(Colors.LightGray) : new SolidColorBrush(Colors.White);
-            //ownerNeeds.Background = (!turnOn) ? new SolidColorBrush(Colors.LightGray) : new SolidColorBrush(Colors.White);
-            //workersSalary.Background = (!turnOn) ? new SolidColorBrush(Colors.LightGray) : new SolidColorBrush(Colors.White);
-            //perCent.Background = (!turnOn) ? new SolidColorBrush(Colors.LightGray) : new SolidColorBrush(Colors.White);
-            //ownerEatsAtWork.Background = (!turnOn) ? new SolidColorBrush(Colors.LightGray) : new SolidColorBrush(Colors.White);
-            //selector.Background = (!turnOn) ? new SolidColorBrush(Colors.LightGray) : new SolidColorBrush(Colors.White);
-
             firstColumn.Background = (!turnOn) ? new SolidColorBrush(Colors.LightGray) : new SolidColorBrush(Colors.White);
-
-            //startOwners.IsEnabled = (!turnOn) ? true : false;
-            //startWorkers.IsEnabled = (!turnOn) ? true : false;
-            //startCoins.IsEnabled = (!turnOn) ? true : false;
-            //prodAm.IsEnabled = (!turnOn) ? true : false;
-            //ownerNeeds.IsEnabled = (!turnOn) ? true : false;
-            //workersSalary.IsEnabled = (!turnOn) ? true : false;
-            //perCent.IsEnabled = (!turnOn) ? true : false;
-            //selector.IsEnabled = (!turnOn) ? true : false;
-
             firstColumn.IsEnabled = (turnOn) ? true : false;
 
-            //bankMoney.Background = (turnOn) ? new SolidColorBrush(Colors.LightGray) : new SolidColorBrush(Colors.White);
-            //ownersMoney.Background = (turnOn) ? new SolidColorBrush(Colors.LightGray) : new SolidColorBrush(Colors.White);
-            //sumDuty.Background = (turnOn) ? new SolidColorBrush(Colors.LightGray) : new SolidColorBrush(Colors.White);
-            //actWorkers.Background = (turnOn) ? new SolidColorBrush(Colors.LightGray) : new SolidColorBrush(Colors.White);
-            //actFirms.Background = (turnOn) ? new SolidColorBrush(Colors.LightGray) : new SolidColorBrush(Colors.White);
-            //sumProd.Background = (turnOn) ? new SolidColorBrush(Colors.LightGray) : new SolidColorBrush(Colors.White);
-
             secondColumn.Background = (turnOn) ? new SolidColorBrush(Colors.LightGray) : new SolidColorBrush(Colors.White);
-
-            //bankMoney.IsEnabled = (turnOn) ? true : false;
-            //ownersMoney.IsEnabled = (turnOn) ? true : false;
-            //sumDuty.IsEnabled = (turnOn) ? true : false;
-            //actWorkers.IsEnabled = (turnOn) ? true : false;
-            //actFirms.IsEnabled = (turnOn) ? true : false;
-            //sumProd.IsEnabled = (turnOn) ? true : false;
-
             secondColumn.IsEnabled = (!turnOn) ? true : false;
         }
 
