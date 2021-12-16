@@ -19,6 +19,7 @@
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition></ColumnDefinition>
@@ -30,8 +31,9 @@
         </Grid.ColumnDefinitions>
 
         <TextBlock Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="2" TextWrapping="Wrap" TextAlignment="Center" FontSize="20" FontWeight="Bold">Входные данные</TextBlock>
-        <Grid x:Name="firstColumn" Grid.Column="0" Grid.Row="1" Grid.RowSpan="10" Grid.ColumnSpan="3">
+        <Grid x:Name="firstColumn" Grid.Column="0" Grid.Row="1" Grid.RowSpan="11" Grid.ColumnSpan="3">
             <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
@@ -52,12 +54,13 @@
             <TextBox x:Name="startOwners" Grid.Column="0" Grid.Row="0" IsReadOnly="False" TextAlignment="Center">5</TextBox>
             <TextBox x:Name="startWorkers" Grid.Column="0" Grid.Row="1" IsReadOnly="False" TextAlignment="Center">18</TextBox>
             <TextBox x:Name="startCoins" Grid.Column="0" Grid.Row="2" IsReadOnly="False" TextAlignment="Center">2</TextBox>
-            <TextBox x:Name="prodAm"  Grid.Column="0" Grid.Row="3" IsReadOnly="False" TextAlignment="Center">1</TextBox>
+            <TextBox x:Name="prodAm"  Grid.Column="0" Grid.Row="3" IsReadOnly="False" TextAlignment="Center">2</TextBox>
             <TextBox x:Name="ownerNeeds" Grid.Column="0" Grid.Row="4" IsReadOnly="False" TextAlignment="Center">1</TextBox>
             <TextBox x:Name="workersSalary" Grid.Column="0" Grid.Row="5" IsReadOnly="False" TextAlignment="Center">1</TextBox>
             <TextBox x:Name="perCent" Grid.Column="0" Grid.Row="6" IsReadOnly="False" TextAlignment="Center">0</TextBox>
             <CheckBox x:Name="ownerEatsAtWork" Grid.Column="0" Grid.Row="7" Grid.ColumnSpan="3" VerticalAlignment="Center" Content="Собственник ест в рабочий день"/>
-            <Expander x:Name="selector" Header="Режим работы банка" Grid.Column="0" Grid.Row="8" Grid.ColumnSpan="3" Grid.RowSpan="2">
+            <CheckBox x:Name="ownersStartWithMoney" Grid.Column="0" Grid.Row="8" Grid.ColumnSpan="3" VerticalAlignment="Center" Content="Владелец начинает без денег"/>
+            <Expander x:Name="selector" Header="Режим работы банка" Grid.Column="0" Grid.Row="9" Grid.ColumnSpan="3" Grid.RowSpan="2">
                 <StackPanel>
                     <RadioButton GroupName="BankRegime" Content="Банк не работает" Checked="Regime0"/>
                     <RadioButton GroupName="BankRegime" Content="Банк даёт в долг последний" Checked="Regime1" IsChecked="True"/>
@@ -76,8 +79,9 @@
 
         <TextBlock Grid.Column="4" Grid.Row="0" Grid.ColumnSpan="2" TextWrapping="Wrap" TextAlignment="Center" FontSize="20" FontWeight="Bold">Текущее состояние</TextBlock>
         
-        <Grid x:Name="secondColumn" Grid.Column="3" Grid.Row="1" Grid.RowSpan="9" Grid.ColumnSpan="3" Background="LightGray" IsEnabled="False">
+        <Grid x:Name="secondColumn" Grid.Column="3" Grid.Row="1" Grid.RowSpan="10" Grid.ColumnSpan="3" Background="LightGray" IsEnabled="False">
             <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
@@ -109,6 +113,6 @@
             <TextBlock Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="2" TextAlignment="Left" VerticalAlignment="Center">Суммарное количество продукции</TextBlock>
         </Grid>
 
-        <Button x:Name="startButton" Grid.Column="5" Grid.Row="10" Content="Старт" Click="StartButton_Click"/>
+        <Button x:Name="startButton" Grid.Column="5" Grid.Row="11" Content="Старт" Click="StartButton_Click"/>
     </Grid>
 </Window>

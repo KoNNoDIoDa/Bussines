@@ -1,0 +1,15 @@
+C:\Users\mushr\Documents\GitHub\Bussines\BusinessSim\BusinessSim\obj\Release\BusinessSim.csproj.AssemblyReference.cache
+C:\Users\mushr\Documents\GitHub\Bussines\BusinessSim\BusinessSim\obj\Release\MainWindow.g.cs
+C:\Users\mushr\Documents\GitHub\Bussines\BusinessSim\BusinessSim\obj\Release\App.g.cs
+C:\Users\mushr\Documents\GitHub\Bussines\BusinessSim\BusinessSim\obj\Release\BusinessSim_MarkupCompile.cache
+C:\Users\mushr\Documents\GitHub\Bussines\BusinessSim\BusinessSim\obj\Release\BusinessSim_MarkupCompile.lref
+C:\Users\mushr\Documents\GitHub\Bussines\BusinessSim\BusinessSim\bin\Release\BusinessSim.exe.config
+C:\Users\mushr\Documents\GitHub\Bussines\BusinessSim\BusinessSim\bin\Release\BusinessSim.exe
+C:\Users\mushr\Documents\GitHub\Bussines\BusinessSim\BusinessSim\bin\Release\BusinessSim.pdb
+C:\Users\mushr\Documents\GitHub\Bussines\BusinessSim\BusinessSim\obj\Release\MainWindow.baml
+C:\Users\mushr\Documents\GitHub\Bussines\BusinessSim\BusinessSim\obj\Release\BusinessSim.g.resources
+C:\Users\mushr\Documents\GitHub\Bussines\BusinessSim\BusinessSim\obj\Release\BusinessSim.Properties.Resources.resources
+C:\Users\mushr\Documents\GitHub\Bussines\BusinessSim\BusinessSim\obj\Release\BusinessSim.csproj.GenerateResource.cache
+C:\Users\mushr\Documents\GitHub\Bussines\BusinessSim\BusinessSim\obj\Release\BusinessSim.csproj.CoreCompileInputs.cache
+C:\Users\mushr\Documents\GitHub\Bussines\BusinessSim\BusinessSim\obj\Release\BusinessSim.exe
+C:\Users\mushr\Documents\GitHub\Bussines\BusinessSim\BusinessSim\obj\Release\BusinessSim.pdb
