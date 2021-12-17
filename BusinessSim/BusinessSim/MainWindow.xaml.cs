@@ -45,7 +45,6 @@ namespace BusinessSim
         int activeFirms = 0;
         int sumProduction = 0;
 
-
         public MainWindow()
         {
             InitializeComponent();
@@ -80,7 +79,6 @@ namespace BusinessSim
         }
         public void DispatcherTimer_Tick(object sender, EventArgs e)
         {
-            
 
             if (working)
             {
@@ -149,6 +147,7 @@ namespace BusinessSim
                                         int given = ((ownerAr[x].workers * salary + ownerNeedsFood) - ownerAr[x].moneyAm > 0) ? (ownerAr[x].workers * salary - ownerAr[x].moneyAm) + ownerNeedsFood : 0; //Выданная сумма
                                         bank.moneyAm -= given;
                                         ownerAr[x].moneyAm += given;
+                                        sumOwnersMoney += given;
                                         ownerAr[x].duty += given;
                                         sumOwnersDuty += ownerAr[x].duty;
 
@@ -163,8 +162,9 @@ namespace BusinessSim
                                         bankMoney.Text = (bankReg != 2) ? Convert.ToString(bank.moneyAm) : "";
                                     }
                                     ownerAr[x].totalMoneyWorkers += (ownerAr[x].moneyAm > ownerAr[x].workers) ? (ownerAr[x].moneyAm > ownerAr[x].workers * salary) ? ownerAr[x].workers * salary : ownerAr[x].moneyAm : ownerAr[x].moneyAm; //Выдача зарплаты //bp
-                                    ownerAr[x].moneyAm -= (ownerAr[x].moneyAm > ownerAr[x].workers) ? (ownerAr[x].moneyAm > ownerAr[x].workers * salary) ? ownerAr[x].workers * salary : ownerAr[x].moneyAm : ownerAr[x].moneyAm;
                                     sumOwnersMoney -= (ownerAr[x].moneyAm > ownerAr[x].workers) ? (ownerAr[x].moneyAm > ownerAr[x].workers * salary) ? ownerAr[x].workers * salary : ownerAr[x].moneyAm : ownerAr[x].moneyAm;
+                                    ownerAr[x].moneyAm -= (ownerAr[x].moneyAm > ownerAr[x].workers) ? (ownerAr[x].moneyAm > ownerAr[x].workers * salary) ? ownerAr[x].workers * salary : ownerAr[x].moneyAm : ownerAr[x].moneyAm;
+                                    
 
                                     ownersMoney.Text = Convert.ToString(sumOwnersMoney);
 
@@ -177,7 +177,6 @@ namespace BusinessSim
 
                                     ownerAr[x].gaveGoods = (ownerAr[x].goodsAm > ownerNeedsFood + ownerAr[x].workers) ? ownerAr[x].goodsAm - ownerNeedsFood - ownerAr[x].workers : 0; //Сколько продукции может продать каждый владелец
                                     bank.goodsAm += ownerAr[x].gaveGoods; //Общее количество продукта на продажу
-                                    sumProduction += ownerAr[x].gaveGoods;
                                 }
 
                                 neededWorkers += (ownerAr[x].goodsAm <= ownerAr[x].workers) ? ownerAr[x].workers - ownerAr[x].goodsAm : 0; //Количество работников, которым придётся брать продукт у других фирм
@@ -194,6 +193,7 @@ namespace BusinessSim
                                 {
                                     if (ownerAr[x].goodsAm < ownerNeedsFood && bank.goodsAm > ownerNeedsFood && ownerAr[x].moneyAm >= ownerNeedsFood) //Покупка еды для владельца
                                     {
+                                        sumOwnersMoney -= ownerNeedsFood;
                                         ownerAr[x].moneyAm -= ownerNeedsFood;
                                         bank.goodsAm -= (bank.goodsAm >= ownerNeedsFood) ? ownerNeedsFood : bank.goodsAm;
                                         ownerAr[x].hungry = 0;
@@ -221,10 +221,12 @@ namespace BusinessSim
                                         if (ownerAr[x].goodsAm > 0 && bank.goodsAm > 0) //Если у хозяина есть продукция
                                         {
                                             bank.goodsAm -= (ownerAr[x].workersAm - ownerAr[x].goodsAm < bank.goodsAm / neededWorkers) ? ownerAr[x].workersAm - ownerAr[x].goodsAm : bank.goodsAm / neededWorkers;
+                                            sumProduction -= ownerAr[x].goodsAm;
                                             ownerAr[x].goodsAm = 0;
 
                                         }
-                                        else if (bank.goodsAm > 0) bank.goodsAm -= (ownerAr[x].workersAm < bank.goodsAm / neededWorkers) ? ownerAr[x].workersAm : bank.goodsAm / neededWorkers; //Если у хозяина продукции нет
+                                        else if (bank.goodsAm > 0 && neededWorkers != 0) bank.goodsAm -= (ownerAr[x].workersAm < bank.goodsAm / neededWorkers) ? ownerAr[x].workersAm : bank.goodsAm / neededWorkers; //Если у хозяина продукции нет
+                                        else if (neededWorkers == 0) bank.goodsAm = 0;
                                     }
                                     ownerAr[x].totalMoneyWorkers -= (ownerAr[x].totalMoneyWorkers >= ownerAr[x].workersAm) ? ownerAr[x].workersAm : ownerAr[x].totalMoneyWorkers; //Расчёт денег на всех рабочих //bp
 
@@ -252,6 +254,7 @@ namespace BusinessSim
                                     sumProduction -= foodGiven;
                                     ownerAr[x].goodsAm -= foodGiven;
                                     ownerAr[x].moneyAm += foodGiven;
+                                    sumOwnersMoney += foodGiven;
                                     ownerAr[x].gaveGoods = 0;
                                 }
                                 else if (bank.goodsAm > 0 && ownerAr[x].gaveGoods > 0)
@@ -270,9 +273,10 @@ namespace BusinessSim
                                         sumOwnersDuty++;
                                     }
 
+                                    sumOwnersDuty -= (ownerAr[x].moneyAm > ownerAr[x].duty) ? ownerAr[x].duty : ownerAr[x].moneyAm;
                                     bank.moneyAm += (ownerAr[x].moneyAm > ownerAr[x].duty) ? ownerAr[x].duty : ownerAr[x].moneyAm;
                                     bankMoney.Text = (bankReg != 2) ? Convert.ToString(bank.moneyAm) : "";
-
+                                    sumDuty.Text = (bankReg != 2) ? Convert.ToString(sumOwnersDuty) : "";
                                 }
 
                                 if (bankReg == 1)
@@ -280,23 +284,28 @@ namespace BusinessSim
                                     if (ownerAr[x].duty <= ownerAr[x].moneyAm)
                                     {
                                         sumOwnersDuty -= ownerAr[x].duty;
+                                        bank.moneyAm += ownerAr[x].duty;
                                         ownerAr[x].moneyAm -= ownerAr[x].duty;
-                                        ownerAr[x].duty = 0;
                                         sumOwnersMoney -= ownerAr[x].duty;
+                                        ownerAr[x].duty = 0;
+                                        
 
                                     }
                                 }
                                 else if (ownerAr[x].moneyAm > 0 && (ownerAr[x].gave > 0 || ownerAr[x].duty > 0))
                                 {
-                                    ownerAr[x].moneyAm += ownerAr[x].gave;
+                                    //ownerAr[x].moneyAm += ownerAr[x].gave;
                                     ownerAr[x].gave = 0;
 
                                     if (ownerAr[x].duty > 0 && ownerAr[x].duty <= ownerAr[x].moneyAm)
                                     {
                                         ownerAr[x].moneyAm -= ownerAr[x].duty;
-                                        sumOwnersDuty -= ownerAr[x].duty;
-                                        ownerAr[x].duty = 0;
                                         sumOwnersMoney -= ownerAr[x].duty;
+                                        sumOwnersDuty -= ownerAr[x].duty;
+                                        bank.moneyAm += ownerAr[x].duty;
+
+                                        ownerAr[x].duty = 0;
+                                        
                                     }
                                 }
 
@@ -329,13 +338,13 @@ namespace BusinessSim
                     if (notWorking >= ownerAr.Length)
                     {
                         working = false;
-
                     }
 
                     if (order >= 2) shift = !shift; //Смена порядка рабочих дней и выходных
+                    if (x == ownerAr.Length - 1) order += (order != 2) ? 1 : -order;
 
                 }
-                order += (order != 2) ? 1 : - order;
+                
             }
             else
             {
@@ -346,7 +355,7 @@ namespace BusinessSim
         public void MainFunc()
         {
             timer.Tick += DispatcherTimer_Tick;
-            timer.Interval = new TimeSpan(0, 0, 0, 0, 500);
+            timer.Interval = new TimeSpan(0, 0, 0, 0, 50);
 
             ownersEat = Convert.ToBoolean(ownerEatsAtWork.IsChecked);
             ownersAm = Convert.ToInt32(startOwners.Text);
