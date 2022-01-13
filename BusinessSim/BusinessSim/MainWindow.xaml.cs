@@ -143,21 +143,23 @@ namespace BusinessSim
                                     sumProduction += ownerAr[x].workersAm * production;
                                     if (ownerAr[x].needMoney) //Выдача денег в долг
                                     {
-                                        
-                                        int given = ((ownerAr[x].workers * salary + ownerNeedsFood) - ownerAr[x].moneyAm > 0) ? (ownerAr[x].workers * salary - ownerAr[x].moneyAm) + ownerNeedsFood : 0; //Выданная сумма
-                                        bank.moneyAm -= given;
-                                        ownerAr[x].moneyAm += given;
-                                        sumOwnersMoney += given;
-                                        ownerAr[x].duty += given;
-                                        sumOwnersDuty += ownerAr[x].duty;
-
-                                        sumDuty.Text = (bankReg != 2) ? Convert.ToString(sumOwnersDuty) : "";
-
-                                        if (given > ownersDonate)
+                                        if (bankReg != 2)
                                         {
-                                            ownersDonate = 0;
+                                            int given = ((ownerAr[x].workers * salary + ownerNeedsFood) - ownerAr[x].moneyAm > 0) ? (ownerAr[x].workers * salary - ownerAr[x].moneyAm) + ownerNeedsFood : 0; //Выданная сумма
+                                            bank.moneyAm -= given;
+                                            ownerAr[x].moneyAm += given;
+                                            sumOwnersMoney += given;
+                                            ownerAr[x].duty += given;
+                                            sumOwnersDuty += ownerAr[x].duty;
+
+                                            sumDuty.Text = (bankReg != 2) ? Convert.ToString(sumOwnersDuty) : "";
+
+                                            if (given > ownersDonate)
+                                            {
+                                                ownersDonate = 0;
+                                            }
+                                            else ownersDonate -= given;
                                         }
-                                        else ownersDonate -= given;
 
                                         bankMoney.Text = (bankReg != 2) ? Convert.ToString(bank.moneyAm) : "";
                                     }
