@@ -319,6 +319,7 @@ namespace BusinessSim
                                     ownerAr[x].works = false; //bp
                                     sumProduction -= ownerAr[x].goodsAm;
                                     sumOwnersMoney -= ownerAr[x].moneyAm;
+                                    sumOwnersDuty -= ownerAr[x].duty;
                                     notWorking++;
                                     activeWorkers -= ownerAr[x].workersAm;
                                     activeFirms--;
@@ -408,7 +409,7 @@ namespace BusinessSim
                 {
                     ownerAr[i].workers++;
                 }
-                ownerAr[i].moneyAm = moneyAm; //если банк не работает, то деньги находятся у фирм с самого начала
+                if (Convert.ToBoolean(!ownersStartWithMoney.IsChecked)) ownerAr[i].moneyAm = moneyAm; //если банк не работает, то деньги находятся у фирм с самого начала
                 if (workersPerOwner > 0) //Распределяет остаток рабочих по фирмам
                 {
                     ownerAr[i].workers++;
@@ -417,7 +418,11 @@ namespace BusinessSim
                 ownerAr[i].workersAm = ownerAr[i].workers;
             }
 
-            if (Convert.ToBoolean(ownersStartWithMoney.IsChecked)) bank.moneyAm = sumOwnersMoney;
+            if (Convert.ToBoolean(ownersStartWithMoney.IsChecked))
+            {
+                bank.moneyAm = sumOwnersMoney;
+                sumOwnersMoney = 0;
+            }
 
             activeWorkers = workersAm;
             activeFirms = ownerAr.Length;
