@@ -150,7 +150,7 @@ namespace BusinessSim
                                             ownerAr[x].moneyAm += given;
                                             sumOwnersMoney += given;
                                             ownerAr[x].duty += given;
-                                            sumOwnersDuty += ownerAr[x].duty;
+                                            sumOwnersDuty += given;
 
                                             sumDuty.Text = (bankReg != 2) ? Convert.ToString(sumOwnersDuty) : "";
 
@@ -441,10 +441,10 @@ namespace BusinessSim
 
         public void TurnTheLight(bool turnOn)
         {
-            firstColumn.Background = (!turnOn) ? new SolidColorBrush(Colors.LightGray) : new SolidColorBrush(Colors.White);
+            firstColumn.Background = (!turnOn) ? new SolidColorBrush(Colors.Gray) : new SolidColorBrush(Colors.DarkGray);
             firstColumn.IsEnabled = turnOn;
 
-            secondColumn.Background = (turnOn) ? new SolidColorBrush(Colors.LightGray) : new SolidColorBrush(Colors.White);
+            secondColumn.Background = (turnOn) ? new SolidColorBrush(Colors.Gray) : new SolidColorBrush(Colors.DarkGray);
             secondColumn.IsEnabled = !turnOn;
         }
 
