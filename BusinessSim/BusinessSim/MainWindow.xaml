@@ -104,6 +104,7 @@
             <TextBox x:Name="actWorkers" Grid.Column="0" Grid.Row="3" IsReadOnly="True" TextAlignment="Center" Background="LightGray"></TextBox>
             <TextBox x:Name="actFirms" Grid.Column="0" Grid.Row="4" IsReadOnly="True" TextAlignment="Center" Background="LightGray"></TextBox>
             <TextBox x:Name="sumProd" Grid.Column="0" Grid.Row="5" IsReadOnly="True" TextAlignment="Center" Background="LightGray"></TextBox>
+            <TextBox x:Name="workersMoney" Grid.Column="0" Grid.Row="6" IsReadOnly="True" TextAlignment="Center" Background="LightGray"></TextBox>
 
             <TextBlock Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="2" TextAlignment="Left" VerticalAlignment="Center">Количество монет у банка</TextBlock>
             <TextBlock Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" TextAlignment="Left" VerticalAlignment="Center">Суммарное количество монет у хозяев</TextBlock>
@@ -111,6 +112,7 @@
             <TextBlock Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="2" TextAlignment="Left" VerticalAlignment="Center">Суммарное количество активных рабочих</TextBlock>
             <TextBlock Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="2" TextAlignment="Left" VerticalAlignment="Center">Количество активных фирм</TextBlock>
             <TextBlock Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="2" TextAlignment="Left" VerticalAlignment="Center">Суммарное количество продукции</TextBlock>
+            <TextBlock Grid.Column="1" Grid.Row="6" Grid.ColumnSpan="2" TextAlignment="Left" VerticalAlignment="Center">Суммарное количество денег у рабочих</TextBlock>
         </Grid>
 
         <Button x:Name="startButton" Grid.Column="5" Grid.Row="11" Content="Старт" Click="StartButton_Click" Background="LightGray"/>
