@@ -237,7 +237,7 @@ namespace BusinessSim
                                         else if (neededWorkers == 0) bank.goodsAm = 0;
                                     }
                                     sumWorkersMoney -= (ownerAr[x].totalMoneyWorkers >= ownerAr[x].workersAm) ? ownerAr[x].workersAm : ownerAr[x].totalMoneyWorkers;
-                                    ownerAr[x].totalMoneyWorkers -= (ownerAr[x].totalMoneyWorkers >= ownerAr[x].workersAm) ? ownerAr[x].workersAm : ownerAr[x].totalMoneyWorkers; //Расчёт денег на всех рабочих //bp
+                                    ownerAr[x].totalMoneyWorkers -= (ownerAr[x].totalMoneyWorkers >= ownerAr[x].workersAm) ? ownerAr[x].workers : ownerAr[x].totalMoneyWorkers; //Расчёт денег на всех рабочих //bp
                                     workersMoney.Text = Convert.ToString(sumWorkersMoney);
 
 
