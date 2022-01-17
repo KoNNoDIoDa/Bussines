@@ -227,9 +227,9 @@ namespace BusinessSim
                                     }
                                     else //Покупка продукции у других фирм
                                     {
-                                        if (ownerAr[x].goodsAm > 0 && bank.goodsAm > 0) //Если у хозяина есть продукция
+                                        if (ownerAr[x].goodsAm > 0 ) //Если у хозяина есть продукция
                                         {
-                                            bank.goodsAm -= (ownerAr[x].workers - ownerAr[x].goodsAm < bank.goodsAm / neededWorkers) ? ownerAr[x].workers - ownerAr[x].goodsAm : (bank.goodsAm / neededWorkers > 0) ? bank.goodsAm / neededWorkers : 1;
+                                            if (bank.goodsAm > 0) bank.goodsAm -= (ownerAr[x].workers - ownerAr[x].goodsAm < bank.goodsAm / neededWorkers) ? ownerAr[x].workers - ownerAr[x].goodsAm : (bank.goodsAm / neededWorkers > 0) ? bank.goodsAm / neededWorkers : 1;
                                             sumProduction -= ownerAr[x].goodsAm;
                                             ownerAr[x].moneyAm += ownerAr[x].goodsAm;
                                             minusMoney = ownerAr[x].goodsAm;
