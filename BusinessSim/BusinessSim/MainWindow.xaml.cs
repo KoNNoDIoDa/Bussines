@@ -227,17 +227,16 @@ namespace BusinessSim
                                     {
                                         if (ownerAr[x].goodsAm > 0 && bank.goodsAm > 0) //Если у хозяина есть продукция
                                         {
-                                            bank.goodsAm -= (ownerAr[x].workers - ownerAr[x].goodsAm < bank.goodsAm / neededWorkers) ? ownerAr[x].workers - ownerAr[x].goodsAm : bank.goodsAm / neededWorkers;
+                                            bank.goodsAm -= (ownerAr[x].workers - ownerAr[x].goodsAm < bank.goodsAm / neededWorkers) ? ownerAr[x].workers - ownerAr[x].goodsAm : (bank.goodsAm / neededWorkers > 0) ? bank.goodsAm / neededWorkers : 1;
                                             sumProduction -= ownerAr[x].goodsAm;
                                             ownerAr[x].moneyAm += ownerAr[x].goodsAm;
                                             sumOwnersMoney += ownerAr[x].goodsAm;
                                             ownerAr[x].goodsAm = 0;
                                         }
-                                        else if (bank.goodsAm > 0 && neededWorkers != 0) bank.goodsAm -= (ownerAr[x].workers < bank.goodsAm / neededWorkers) ? ownerAr[x].workers : bank.goodsAm / neededWorkers; //Если у хозяина продукции нет
-                                        else if (neededWorkers == 0) bank.goodsAm = 0;
+                                        else if (bank.goodsAm > 0 && neededWorkers != 0) bank.goodsAm -= (ownerAr[x].workers < bank.goodsAm / neededWorkers) ? ownerAr[x].workers : (bank.goodsAm / neededWorkers > 0) ? bank.goodsAm / neededWorkers : 1; //Если у хозяина продукции нет
                                     }
                                     sumWorkersMoney -= (ownerAr[x].totalMoneyWorkers >= ownerAr[x].workersAm) ? ownerAr[x].workersAm : ownerAr[x].totalMoneyWorkers;
-                                    ownerAr[x].totalMoneyWorkers -= (ownerAr[x].totalMoneyWorkers >= ownerAr[x].workersAm) ? ownerAr[x].workers : ownerAr[x].totalMoneyWorkers; //Расчёт денег на всех рабочих //bp
+                                    ownerAr[x].totalMoneyWorkers -= (ownerAr[x].totalMoneyWorkers >= ownerAr[x].workers) ? ownerAr[x].workers : ownerAr[x].totalMoneyWorkers; //Расчёт денег на всех рабочих //bp
                                     workersMoney.Text = Convert.ToString(sumWorkersMoney);
 
 
@@ -434,6 +433,7 @@ namespace BusinessSim
             actWorkers.Text = Convert.ToString(workersAm);
             actFirms.Text = Convert.ToString(activeFirms);
             sumProd.Text = Convert.ToString(sumProduction);
+            workersMoney.Text = Convert.ToString(sumWorkersMoney);
 
             TurnTheLight(false);
             
