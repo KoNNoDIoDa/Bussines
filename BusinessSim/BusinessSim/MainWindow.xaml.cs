@@ -220,24 +220,29 @@ namespace BusinessSim
 
                                     if (ownerAr[x].goodsAm >= ownerAr[x].workers) //Покупка продукции у хозяина
                                     {
-                                        sumProduction -= (ownerAr[x].totalMoneyWorkers >= ownerAr[x].workers) ? ownerAr[x].workers : (ownerAr[x].goodsAm >= ownerAr[x].totalMoneyWorkers) ? ownerAr[x].totalMoneyWorkers : ownerAr[x].goodsAm;
-                                        ownerAr[x].moneyAm += (ownerAr[x].totalMoneyWorkers >= ownerAr[x].workers) ? ownerAr[x].workers : (ownerAr[x].goodsAm >= ownerAr[x].totalMoneyWorkers) ? ownerAr[x].totalMoneyWorkers : ownerAr[x].goodsAm;
-                                        sumOwnersMoney += (ownerAr[x].totalMoneyWorkers >= ownerAr[x].workers) ? ownerAr[x].workers : (ownerAr[x].goodsAm >= ownerAr[x].totalMoneyWorkers) ? ownerAr[x].totalMoneyWorkers : ownerAr[x].goodsAm;
-                                        ownerAr[x].goodsAm -= (ownerAr[x].totalMoneyWorkers >= ownerAr[x].workers) ? ownerAr[x].workers : (ownerAr[x].goodsAm >= ownerAr[x].totalMoneyWorkers) ? ownerAr[x].totalMoneyWorkers : ownerAr[x].goodsAm;
+                                        int locProd = ((ownerAr[x].totalMoneyWorkers >= ownerAr[x].workers) ? ownerAr[x].workers : (ownerAr[x].goodsAm >= ownerAr[x].totalMoneyWorkers) ? ownerAr[x].totalMoneyWorkers : ownerAr[x].goodsAm) 
+                                            * ((ownerAr[x].totalMoneyWorkers > 0) ? 1 : 0);
+                                        sumProduction -= locProd;
+                                        ownerAr[x].moneyAm += locProd;
+                                        sumOwnersMoney += locProd;
+                                        ownerAr[x].goodsAm -= locProd;
                                     }
                                     else //Покупка продукции у других фирм
                                     {
                                         if (ownerAr[x].goodsAm > 0 ) //Если у хозяина есть продукция
                                         {
-                                            if (bank.goodsAm > 0) bank.goodsAm -= (ownerAr[x].workers - ownerAr[x].goodsAm < bank.goodsAm / neededWorkers) ? ownerAr[x].workers - ownerAr[x].goodsAm : (bank.goodsAm / neededWorkers > 0) ? bank.goodsAm / neededWorkers : 1;
-                                            sumProduction -= ownerAr[x].goodsAm;
-                                            ownerAr[x].moneyAm += ownerAr[x].goodsAm;
-                                            minusMoney = ownerAr[x].goodsAm;
-                                            sumOwnersMoney += ownerAr[x].goodsAm;
+                                            if (bank.goodsAm > 0) bank.goodsAm -= ((ownerAr[x].workers - ownerAr[x].goodsAm < bank.goodsAm / neededWorkers) ? ownerAr[x].workers - ownerAr[x].goodsAm : (bank.goodsAm / neededWorkers > 0) ? bank.goodsAm / neededWorkers : 1 ) / ((ownerAr[x].totalMoneyWorkers > 0) ? ownerAr[x].totalMoneyWorkers / ownerAr[x].totalMoneyWorkers : 1);
+                                            int locGoods = ownerAr[x].goodsAm * ((ownerAr[x].totalMoneyWorkers > 0) ? 1 : 0);
+                                            sumProduction -= locGoods;
+                                            ownerAr[x].moneyAm += locGoods;
+                                            minusMoney = locGoods;
+                                            sumOwnersMoney += locGoods;
                                             ownerAr[x].goodsAm = 0;
                                         }
-                                        else if (bank.goodsAm > 0 && neededWorkers != 0) bank.goodsAm -= (ownerAr[x].workers < bank.goodsAm / neededWorkers) ? ownerAr[x].workers : (bank.goodsAm / neededWorkers > 0) ? bank.goodsAm / neededWorkers : 1; //Если у хозяина продукции нет
+                                        else if (bank.goodsAm > 0 && neededWorkers != 0) bank.goodsAm -= ((ownerAr[x].workers < bank.goodsAm / neededWorkers) ? ownerAr[x].workers : (bank.goodsAm / neededWorkers > 0) ? bank.goodsAm / neededWorkers : 1) * ((ownerAr[x].totalMoneyWorkers > 0) ? 1 : 0); //Если у хозяина продукции нет
                                     }
+
+                                    if (ownerAr[x].totalMoneyWorkers == 0) minusMoney = 0;
                                     sumWorkersMoney -= minusMoney;
                                     ownerAr[x].totalMoneyWorkers -= minusMoney; //Расчёт денег на всех рабочих //bp
                                     workersMoney.Text = Convert.ToString(sumWorkersMoney);
