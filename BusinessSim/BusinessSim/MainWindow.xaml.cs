@@ -229,9 +229,9 @@ namespace BusinessSim
                                     }
                                     else //Покупка продукции у других фирм
                                     {
-                                        if (ownerAr[x].goodsAm > 0 ) //Если у хозяина есть продукция
+                                        if (ownerAr[x].goodsAm > 0) //Если у хозяина есть продукция
                                         {
-                                            if (bank.goodsAm > 0) bank.goodsAm -= ((ownerAr[x].workers - ownerAr[x].goodsAm < bank.goodsAm / neededWorkers) ? ownerAr[x].workers - ownerAr[x].goodsAm : (bank.goodsAm / neededWorkers > 0) ? bank.goodsAm / neededWorkers : 1 ) / ((ownerAr[x].totalMoneyWorkers > 0) ? ownerAr[x].totalMoneyWorkers / ownerAr[x].totalMoneyWorkers : 1);
+                                            if (bank.goodsAm > 0) bank.goodsAm -= ((ownerAr[x].workers - ownerAr[x].goodsAm < bank.goodsAm / neededWorkers) ? ownerAr[x].workers - ownerAr[x].goodsAm : (bank.goodsAm / neededWorkers > 0) ? bank.goodsAm / neededWorkers : 1) / ((ownerAr[x].totalMoneyWorkers > 0) ? ownerAr[x].totalMoneyWorkers / ownerAr[x].totalMoneyWorkers : 1);
                                             int locGoods = ownerAr[x].goodsAm * ((ownerAr[x].totalMoneyWorkers > 0) ? 1 : 0);
                                             sumProduction -= locGoods;
                                             ownerAr[x].moneyAm += locGoods;
@@ -240,6 +240,7 @@ namespace BusinessSim
                                             ownerAr[x].goodsAm = 0;
                                         }
                                         else if (bank.goodsAm > 0 && neededWorkers != 0) bank.goodsAm -= ((ownerAr[x].workers < bank.goodsAm / neededWorkers) ? ownerAr[x].workers : (bank.goodsAm / neededWorkers > 0) ? bank.goodsAm / neededWorkers : 1) * ((ownerAr[x].totalMoneyWorkers > 0) ? 1 : 0); //Если у хозяина продукции нет
+                                        else minusMoney = 0;
                                     }
 
                                     if (ownerAr[x].totalMoneyWorkers == 0) minusMoney = 0;
