@@ -45,6 +45,7 @@ namespace BusinessSim
         int activeFirms = 0;
         int sumProduction = 0;
         int sumWorkersMoney = 0;
+        private int moneyLeft = 0;
 
         public MainWindow()
         {
@@ -144,6 +145,13 @@ namespace BusinessSim
                                     sumProduction += ownerAr[x].workersAm * production;
                                     if (ownerAr[x].needMoney) //Выдача денег в долг
                                     {
+                                        if(moneyLeft > 0)
+                                        {
+                                            int given = ((ownerAr[x].workers * salary + ownerNeedsFood) - ownerAr[x].moneyAm > 0) ? ((ownerAr[x].workers * salary - ownerAr[x].moneyAm + ownerNeedsFood) > moneyLeft) ? moneyLeft: (ownerAr[x].workers * salary - ownerAr[x].moneyAm) + ownerNeedsFood : 0;
+                                            ownerAr[x].moneyAm -= given;
+                                            moneyLeft -= given;
+                                            sumOwnersMoney += given;
+                                        }
                                         if (bankReg != 2)
                                         {
                                             int given = ((ownerAr[x].workers * salary + ownerNeedsFood) - ownerAr[x].moneyAm > 0) ? (ownerAr[x].workers * salary - ownerAr[x].moneyAm) + ownerNeedsFood : 0; //Выданная сумма
@@ -258,6 +266,7 @@ namespace BusinessSim
                                     sumOwnersMoney -= ownerAr[x].moneyAm;
                                     activeWorkers -= ownerAr[x].workersAm;
                                     activeFirms--;
+                                    moneyLeft += ownerAr[x].moneyAm;
 
                                     actFirms.Text = Convert.ToString(activeFirms);
                                     actWorkers.Text = Convert.ToString(activeWorkers);
@@ -338,6 +347,7 @@ namespace BusinessSim
                                     notWorking++;
                                     activeWorkers -= ownerAr[x].workersAm;
                                     activeFirms--;
+                                    moneyLeft += ownerAr[x].moneyAm;
 
                                     actFirms.Text = Convert.ToString(activeFirms);
                                     actWorkers.Text = Convert.ToString(activeWorkers);
