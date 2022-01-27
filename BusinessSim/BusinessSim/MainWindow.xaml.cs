@@ -86,7 +86,7 @@ namespace BusinessSim
             {
                 for (int x = 0; x != ownerAr.Length; x++) //Цикл для перебора фирм на каждое действие
                 {
-                    
+                    bank.goodsAm -= (x == 0) ? bank.goodsAm : 0;
                     switch (order)
                     {
                         case 0:
@@ -96,10 +96,10 @@ namespace BusinessSim
                                 {
 
 
-                                    int hung; //Количество рабочих, которым не хватило еды
+                                    //int hung; //Количество рабочих, которым не хватило еды
                                     if ((shift && x % 2 != 0) || (!shift && x % 2 == 0))
                                     {
-                                        hung = (ownerAr[x].workers <= ownerAr[x].goodsAm) ? 0 : (ownerAr[x].workers - ownerAr[x].goodsAm);
+                                        //hung = (ownerAr[x].workers <= ownerAr[x].goodsAm) ? 0 : (ownerAr[x].workers - ownerAr[x].goodsAm);
 
                                         if (bankReg != 1)
                                         {
@@ -107,20 +107,20 @@ namespace BusinessSim
                                             ownersDonate += ownerAr[x].gave;
                                         }
 
-                                        if (hung > 0)
-                                        {
-                                            activeWorkers -= ownerAr[x].workersAm;//bp
-                                            ownerAr[x].workersAm = ownerAr[x].workers - hung;
-                                            activeWorkers += ownerAr[x].workersAm;
+                                        //if (hung > 0)
+                                        //{
+                                        //    activeWorkers -= ownerAr[x].workersAm;//bp
+                                        //    ownerAr[x].workersAm = ownerAr[x].workers - hung;
+                                        //    activeWorkers += ownerAr[x].workersAm;
 
-                                            actWorkers.Text = Convert.ToString(activeWorkers);
-                                        }
-                                        else
-                                        {
-                                            sumProduction -= ownerAr[x].workers;
-                                            ownerAr[x].goodsAm -= ownerAr[x].workers; //bp
-                                            sumProd.Text = Convert.ToString(sumProduction);
-                                        }
+                                        //    actWorkers.Text = Convert.ToString(activeWorkers);
+                                        //}
+                                        //else
+                                        //{
+                                        //    sumProduction -= ownerAr[x].workers;
+                                        //    ownerAr[x].goodsAm -= ownerAr[x].workers; //bp
+                                        //    sumProd.Text = Convert.ToString(sumProduction);
+                                        //}
                                     }
 
                                 }
@@ -148,7 +148,7 @@ namespace BusinessSim
                                         if(moneyLeft > 0)
                                         {
                                             int given = ((ownerAr[x].workers * salary + ownerNeedsFood) - ownerAr[x].moneyAm > 0) ? ((ownerAr[x].workers * salary - ownerAr[x].moneyAm + ownerNeedsFood) > moneyLeft) ? moneyLeft: (ownerAr[x].workers * salary - ownerAr[x].moneyAm) + ownerNeedsFood : 0;
-                                            ownerAr[x].moneyAm -= given;
+                                            ownerAr[x].moneyAm += given;
                                             moneyLeft -= given;
                                             sumOwnersMoney += given;
                                         }
@@ -204,7 +204,12 @@ namespace BusinessSim
 
                                 if ((shift && x % 2 != 0) || (!shift && x % 2 == 0))
                                 {
-                                    if (ownerAr[x].goodsAm < ownerNeedsFood && bank.goodsAm > ownerNeedsFood && ownerAr[x].moneyAm >= ownerNeedsFood) //Покупка еды для владельца
+                                    if(ownerAr[x].goodsAm > ownerNeedsFood)
+                                    {
+                                        ownerAr[x].hungry = 0;
+                                        ownerAr[x].goodsAm -= ownerNeedsFood;
+                                    }
+                                    else if (ownerAr[x].goodsAm < ownerNeedsFood && bank.goodsAm > ownerNeedsFood && ownerAr[x].moneyAm >= ownerNeedsFood) //Покупка еды для владельца
                                     {
                                         sumOwnersMoney -= ownerNeedsFood;
                                         ownerAr[x].moneyAm -= ownerNeedsFood;
@@ -363,6 +368,7 @@ namespace BusinessSim
                             break;
 
                     }
+                    
 
                     if (notWorking >= ownerAr.Length)
                     {
